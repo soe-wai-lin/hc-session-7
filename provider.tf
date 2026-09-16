@@ -9,8 +9,8 @@ terraform {
   # cloud {
   #   organization = "swl-tfc"
   #   workspaces {
-  #     name    = "3tier-cf-vpc"
-  #     project = "3tier"
+  #     name    = "session-7"
+  #     project = "hc-cie"
   #   }
   # }
 }

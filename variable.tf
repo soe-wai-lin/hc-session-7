@@ -133,6 +133,22 @@ variable "counting_tg_port" {
   type    = number
 }
 
+
+variable "ssh_port" {
+  default = 22
+  type    = number
+}
+
+variable "http_port" {
+  default = 80
+  type    = number
+}
+
+variable "https_port" {
+  default = 443
+  type    = number
+}
+
 # variable "AWS_ACCESS_KEY_ID" {}
 
 # variable "AWS_SECRET_ACCESS_KEY" {}

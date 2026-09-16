@@ -2,14 +2,14 @@
 ###    Dashboard LB         ####
 ################################
 resource "aws_lb" "dashboard_lb" {
-  name               = "dashboard-asg"
+  name               = "dashboard-lb"
   load_balancer_type = "application"
   internal           = false
   subnets = [
     aws_subnet.terra_vpc_pub_01.id,
     aws_subnet.terra_vpc_pub_02.id
   ]
-  security_groups = [aws_security_group.dashboard-sg.id]
+  security_groups = [aws_security_group.dashboard-lb-sg.id]
 }
 
 resource "aws_lb_listener" "dashboard_lb" {
@@ -36,7 +36,7 @@ resource "aws_lb" "counting_lb" {
     aws_subnet.terra_vpc_priv_01.id,
     aws_subnet.terra_vpc_priv_02.id
   ]
-  security_groups = [aws_security_group.counting-sg.id]
+  security_groups = [aws_security_group.counting-lb-sg.id]
 }
 
 resource "aws_lb_listener" "counting_lb" {

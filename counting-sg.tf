@@ -7,49 +7,30 @@ resource "aws_security_group" "counting-sg" {
     Name = "counting-sg"
   }
 }
-resource "aws_security_group_rule" "allow__ssh" {
-  type                     = "ingress"
-  from_port                = 22
-  to_port                  = 22
-  protocol                 = "tcp"
-  source_security_group_id = aws_security_group.dashboard-sg.id
-  security_group_id        = aws_security_group.counting-sg.id
-}
 
 resource "aws_security_group_rule" "allow__ssh_from_bastion" {
   type                     = "ingress"
-  from_port                = 22
-  to_port                  = 22
+  from_port                = var.ssh_port
+  to_port                  = var.ssh_port
   protocol                 = "tcp"
   source_security_group_id = aws_security_group.bastion-sg.id
   security_group_id        = aws_security_group.counting-sg.id
 }
 
-resource "aws_security_group_rule" "dashboard_allow_to_counting_alb" {
+resource "aws_security_group_rule" "allow__7777" {
   type                     = "ingress"
-  from_port                = 80
-  to_port                  = 80
+  from_port                = var.counting_tg_port
+  to_port                  = var.counting_tg_port
   protocol                 = "tcp"
-  source_security_group_id = aws_security_group.dashboard-sg.id
+  source_security_group_id = aws_security_group.counting-lb-sg.id
   security_group_id        = aws_security_group.counting-sg.id
 }
 
-resource "aws_security_group_rule" "allow__777" {
-  type                     = "ingress"
-  from_port                = 7777
-  to_port                  = 7777
-  protocol                 = "tcp"
-  # source_security_group_id = aws_security_group.dashboard-sg.id
-  cidr_blocks       = ["0.0.0.0/0"]
-  security_group_id        = aws_security_group.counting-sg.id
-}
-
-
-resource "aws_security_group_rule" "allow_outbond" {
+resource "aws_security_group_rule" "allow_https_outbound" {
   type              = "egress"
-  to_port           = 0
-  protocol          = "-1"
-  from_port         = 0
+  to_port           = var.https_port
+  protocol          = "tcp"
+  from_port         = var.https_port
   cidr_blocks       = ["0.0.0.0/0"]
   security_group_id = aws_security_group.counting-sg.id
 }

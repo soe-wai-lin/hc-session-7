@@ -3,6 +3,8 @@
 # Create a new user for the dashboard service
 sudo useradd -r -s /usr/sbin/nologin dashboard-admin
 
+sudo useradd -r -s /usr/sbin/nologin testuser
+
 sudo mkdir -p /opt/dashboard
 
 sudo mkdir -p /etc/dashboard
@@ -16,6 +18,8 @@ sudo chown -R dashboard-admin:dashboard-admin /var/lib/dashboard
 sudo chown -R root:dashboard-admin /etc/dashboard
 
 sudo chmod 750 /etc/dashboard
+
+sudo dnf install -y unzip
 
 curl -fL -O https://github.com/hashicorp/demo-consul-101/releases/download/v0.0.5/dashboard-service_linux_amd64.zip
 
@@ -43,7 +47,7 @@ User=dashboard-admin
 Group=dashboard-admin
 WorkingDirectory=/opt/dashboard
 Environment="PORT=9000"
-Environment="COUNTING_SERVICE_URL=http://internal-counting-lb-1272789815.ap-southeast-1.elb.amazonaws.com"
+Environment="COUNTING_SERVICE_URL=https://${counting_alb_dns}"
 ExecStart=/opt/dashboard/dashboard-service
 Restart=always
 RestartSec=5

@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # Create a new user for the dashboard service
 sudo useradd -r -s /usr/sbin/nologin counting-admin
 
@@ -16,6 +17,8 @@ sudo chown -R root:counting-admin /etc/counting
 
 sudo chmod 750 /etc/counting
 
+sudo dnf install -y unzip
+
 curl -fL -O curl -fL -O https://github.com/hashicorp/demo-consul-101/releases/download/v0.0.5/counting-service_linux_amd64.zip
 
 unzip counting-service_linux_amd64.zip
@@ -25,6 +28,10 @@ mv counting-service_linux_amd64 counting-service
 chmod +x counting-service
 
 sudo mv counting-service /opt/counting/
+
+sudo chown -R counting-admin:counting-admin /opt/counting
+
+sudo chmod 755 /opt/dashboard/counting-service
 
 cat <<EOF > counting-service.service
 

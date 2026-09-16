@@ -16,6 +16,18 @@ resource "aws_autoscaling_group" "counting_asg" {
 
   launch_template {
     id = aws_launch_template.counting_template.id
+    version = "$Latest"
+  }
+
+  health_check_type         = "ELB"
+  health_check_grace_period = 300
+
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+      instance_warmup = 300
+    }
   }
 
   tag {
@@ -76,8 +88,8 @@ resource "aws_autoscaling_group" "dashboard_asg" {
   min_size         = var.dashboard_asg_min
   desired_capacity = var.dashboard_asg_desired_capacity
   vpc_zone_identifier = [
-    aws_subnet.terra_vpc_pub_01.id,
-    aws_subnet.terra_vpc_pub_02.id
+    aws_subnet.terra_vpc_priv_01.id,
+    aws_subnet.terra_vpc_priv_02.id
   ]
   target_group_arns = [
     aws_lb_target_group.dashboard_tg.arn
@@ -85,6 +97,18 @@ resource "aws_autoscaling_group" "dashboard_asg" {
 
   launch_template {
     id = aws_launch_template.dashboard_template.id
+    version = "$Latest"
+  }
+
+  health_check_type         = "ELB"
+  health_check_grace_period = 300
+
+  instance_refresh {
+    strategy = "Rolling"
+    preferences {
+      min_healthy_percentage = 50
+      instance_warmup = 300
+    }
   }
   tag {
     key                 = "Name"

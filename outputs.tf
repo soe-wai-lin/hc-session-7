@@ -53,9 +53,9 @@ output "counting-lb" {
 #   description = "Route53 map with web-asg"
 # }
 
-# output "cloudfront" {
-#   value = aws_cloudfront_distribution.alb_cf.domain_name
-# }
+output "cloudfront" {
+  value = aws_cloudfront_distribution.alb_cf.domain_name
+}
 
 output "ubuntu_ami_id" {
   value = data.aws_ami.ubuntu.id
