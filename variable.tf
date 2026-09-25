@@ -10,7 +10,7 @@ variable "aws_region" {
 }
 
 variable "vpc_name" {
-  default = "terra_vpc"
+  default = "custom_vpc"
 }
 
 variable "vpc_cidr_block" {

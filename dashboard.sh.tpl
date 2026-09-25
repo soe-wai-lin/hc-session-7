@@ -47,7 +47,8 @@ User=dashboard-admin
 Group=dashboard-admin
 WorkingDirectory=/opt/dashboard
 Environment="PORT=9000"
-Environment="COUNTING_SERVICE_URL=https://${counting_alb_dns}"
+Environment="COUNTING_SERVICE_URL=http://${counting_alb_dns}"
+# Environment="COUNTING_SERVICE_URL=https://counting.swl.io"
 ExecStart=/opt/dashboard/dashboard-service
 Restart=always
 RestartSec=5
